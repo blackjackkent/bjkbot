@@ -4,7 +4,7 @@ const {
 const DiceRoller = require('../../modules/logic/diceRoller');
 const config = require('../../config.json');
 
-module.exports = class DemoResponseCommand extends Command {
+module.exports = class RollCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'roll',

@@ -1,5 +1,17 @@
 {
 	"token": "token here",
 	"prefix": "##",
-	"ownerId": "123456"
+	"ownerId": "123456",
+	"spoiler": {
+		"spoilerChannel": "spoiler-discussion",
+		"generalChannel": "general"
+	},
+	"autoRegular": {
+		"enabled": true,
+		"requiredMessageCount": 5,
+		"regularRoleName": "Regulars"
+	},
+	"dnd": {
+		"gamingChannel": "gaming"
+	}
 }
