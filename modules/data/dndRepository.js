@@ -1,4 +1,5 @@
 const BaseRepository = require('./baseRepository');
+const DnDCharacter = require('../models/dndCharacter');
 
 module.exports = class DnDRepository extends BaseRepository {
 	constructor(client) {
@@ -14,6 +15,8 @@ module.exports = class DnDRepository extends BaseRepository {
 
 	getCharacter(guild, userId) {
 		let data = this.getCharacters(guild);
-		return data[userId];
+		let rawCharacter = data[userId];
+		let character = new DnDCharacter(rawCharacter);
+		return character;
 	}
 }

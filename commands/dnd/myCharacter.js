@@ -28,12 +28,12 @@ module.exports = class InitCharacterCommand extends Command {
 		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		message.reply(`here is your character information!
 		
-		**Strength:** ${character.strength}
-		**Dexterity:** ${character.dexterity}
-		**Intelligence:** ${character.intelligence}
-		**Constitution:** ${character.constitution}
-		**Wisdom:** ${character.wisdom}
-		**Charisma:** ${character.charisma}
+		**Strength:** ${character.strength} (${character.getStrengthModifier()})
+		**Dexterity:** ${character.dexterity} (${character.getDexModifier()})
+		**Intelligence:** ${character.intelligence} (${character.getIntelligenceModifier()})
+		**Constitution:** ${character.constitution} (${character.getConModifier()})
+		**Wisdom:** ${character.wisdom} (${character.getWisdomModifier()})
+		**Charisma:** ${character.charisma} (${character.getCharismaModifier()})
 		
 		Type "!initcharacter" to reroll.`);
 	}
