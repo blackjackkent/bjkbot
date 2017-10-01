@@ -24,10 +24,6 @@ module.exports = class RollSkillCheckCommand extends Command {
 		this.diceRoller = new DiceRoller();
 	}
 	run(message, args) {
-		let gamingChannelName = config.dnd.gamingChannel;
-		if (message.channel.name !== gamingChannelName) {
-			return;
-		}
 		try {
 			const { skillIdentifier } = args;
 			let character = this.dndRepository.getCharacter(message.guild, message.author.toString());

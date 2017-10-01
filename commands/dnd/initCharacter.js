@@ -19,10 +19,6 @@ module.exports = class InitCharacterCommand extends Command {
 		this.dndRepository = new DnDRepository(client);
 	}
 	run(message) {
-		let gamingChannelName = config.dnd.gamingChannel;
-		if (message.channel.name !== gamingChannelName) {
-			return;
-		}
 		this.initCharacter(message);
 	}
 
