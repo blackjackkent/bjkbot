@@ -22,7 +22,7 @@ module.exports = class RollCommand extends Command {
 		});
 	}
 	run(message, args) {
-		const { phrase } = args;
+		let { phrase } = args;
 		if (phrase === '') {
 			phrase = 'd20';
 		}
