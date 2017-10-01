@@ -8,28 +8,8 @@ module.exports = class DnDCharacter {
 		this.charisma = rawCharacter.charisma;
 	}
 
-	getStrengthModifier() {
-		return this.getModifier(this.strength);
-	}
-
-	getDexModifier() {
-		return this.getModifier(this.dexterity);
-	}
-
-	getIntelligenceModifier() {
-		return this.getModifier(this.intelligence);
-	}
-
-	getWisdomModifier() {
-		return this.getModifier(this.wisdom);
-	}
-
-	getConModifier() {
-		return this.getModifier(this.constitution);
-	}
-
-	getCharismaModifier() {
-		return this.getModifier(this.charisma);
+	getSkillModifierByName(skillName) {
+		return this.getModifier(this[skillName]);
 	}
 
 	getModifier(skillValue) {

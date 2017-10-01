@@ -23,6 +23,9 @@ module.exports = class RollCommand extends Command {
 	}
 	run(message, args) {
 		const { phrase } = args;
+		if (phrase === '') {
+			phrase = 'd20';
+		}
 		let diceRoller = new DiceRoller();
 		try {
 			let result = diceRoller.roll(phrase);

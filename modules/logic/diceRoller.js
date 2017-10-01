@@ -1,6 +1,6 @@
 module.exports = class DiceRoller {
 	roll(phrase) {
-		const regex = /(^[0-9]*?)([d])([0-9]*)(\s?\+\s?([0-9]*))?$/;
+		const regex = /(^[0-9]*?)([d])([0-9]*)(\s?\+\s?(\-?[0-9]*))?$/;
 		let match = regex.exec(phrase);
 		const multiplier = parseInt(match[1]);
 		const max = parseInt(match[3]);

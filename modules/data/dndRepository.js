@@ -16,6 +16,9 @@ module.exports = class DnDRepository extends BaseRepository {
 	getCharacter(guild, userId) {
 		let data = this.getCharacters(guild);
 		let rawCharacter = data[userId];
+		if (!rawCharacter) {
+			return undefined;
+		}
 		let character = new DnDCharacter(rawCharacter);
 		return character;
 	}

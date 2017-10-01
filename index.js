@@ -18,7 +18,8 @@ client.registry
 		['demo', 'Demo'],
 		['spoiler', 'Spoiler'],
 		['points', 'Points'],
-		['dnd', 'DND']
+		['dnd', 'DND'],
+		['wiki', 'Wiki']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()

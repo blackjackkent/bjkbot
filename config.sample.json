@@ -13,5 +13,8 @@
 	},
 	"dnd": {
 		"gamingChannel": "gaming"
+	},
+	"wiki": {
+		"language": "en"
 	}
 }
