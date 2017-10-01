@@ -1,4 +1,4 @@
-let config = require('../config.json');
+let config = require('../../config.json');
 module.exports = class AutoRegularProcessor {
 	process(message, client) {
 		if (message.author.id === client.user.id) {

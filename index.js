@@ -5,7 +5,7 @@ const {
 const sqlite = require('sqlite');
 const path = require('path');
 const config = require('./config');
-const MessageProcessor = require('./modules/messageProcessor');
+const MessageProcessor = require('./modules/processors/messageProcessor');
 process.on('unhandledRejection', r => console.log(r));
 const client = new CommandoClient({
 	commandPrefix: config.prefix,
