@@ -95,6 +95,7 @@ module.exports = class DndScenarioRunner {
 		if (!success.length) {
 			return;
 		}
+		console.log('test');
 		this.printResult(success, this.currentScenario.successMessage);
 	}
 
