@@ -32,8 +32,18 @@ module.exports = class RollSkillCheckCommand extends Command {
 				return;
 			}
 			let modifier = character.getSkillModifierByName(skillIdentifier);
-			let result = this.diceRoller.roll(`d20 + ${modifier}`);
-			message.reply(`with your ${skillIdentifier} modifier of ${modifier}, you rolled ${result}!`);
+			let result = this.diceRoller.getD20RollResult(modifier);
+			let reply = '';
+			if (result.isCriticalSuccess) {
+				reply += 'Critical Success! ';
+			}
+			if (result.isCriticalFailure) {
+				reply += 'Critica Failure! :( ';
+			}
+			reply += `You rolled a natural ${result.naturalRoll}. `;
+			reply += `With your ${skillIdentifier} modifier of ${modifier}, your total is ${result.total}!`
+			message.reply(reply);
+			return result;
 		} catch (error) {
 			console.log(error);
 		}

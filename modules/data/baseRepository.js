@@ -6,12 +6,13 @@ module.exports = class BaseRepository {
 	get(guild, key) {
 		let result = this.client.provider.get(guild, key);
 		if (!result) {
-			return {};
+			return null;
 		}
-		return result;
+		return JSON.parse(result);
 	}
 
 	set(guild, key, value) {
-		this.client.provider.set(guild, key, value);
+		let stringifiedValue = JSON.stringify(value);
+		this.client.provider.set(guild, key, stringifiedValue);
 	}
 }

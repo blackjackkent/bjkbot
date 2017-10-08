@@ -57,6 +57,9 @@ module.exports = class InitCharacterCommand extends Command {
 
 	storeCharacterData(message, character) {
 		let characterData = this.dndRepository.getCharacters(message.guild);
+		if (characterData == null) {
+			characterData = {};
+		}
 		let senderKey = message.author.toString();
 		characterData[senderKey] = character;
 		this.dndRepository.setCharacters(message.guild, characterData);

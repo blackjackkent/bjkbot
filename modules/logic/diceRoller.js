@@ -1,4 +1,10 @@
+const DiceRollResult = require('../models/diceRollResult');
 module.exports = class DiceRoller {
+	getD20RollResult(modifier) {
+		let naturalRoll = this.roll('d20');
+		return new DiceRollResult(naturalRoll, modifier);
+	}
+
 	roll(phrase) {
 		const regex = /(^[0-9]*?)([d])([0-9]*)(\s?\+\s?(\-?[0-9]*))?$/;
 		let match = regex.exec(phrase);

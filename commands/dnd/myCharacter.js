@@ -31,6 +31,6 @@ module.exports = class MyCharacterCommand extends Command {
 		**Wisdom:** ${character.wisdom} (${character.getSkillModifierByName('wisdom')})
 		**Charisma:** ${character.charisma} (${character.getSkillModifierByName('charisma')})
 		
-		Type "!initcharacter" to reroll.`);
+		Type "${config.prefix}initcharacter" to reroll.`);
 	}
 }
