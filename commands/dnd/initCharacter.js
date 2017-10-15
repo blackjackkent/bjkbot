@@ -4,6 +4,7 @@ const {
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
 const config = require('../../config.json');
+const { getRandomItemsFromArray } = require('../../modules/logic/utility');
 
 module.exports = class InitCharacterCommand extends Command {
 	constructor(client) {
@@ -29,7 +30,8 @@ module.exports = class InitCharacterCommand extends Command {
 			intelligence: this.generateScore(),
 			constitution: this.generateScore(),
 			wisdom: this.generateScore(),
-			charisma: this.generateScore()
+			charisma: this.generateScore(),
+			proficientSkills: this.getRandomProficiencies()
 		}
 		this.storeCharacterData(message, character);
 		message.reply(`your character has been created!
@@ -40,6 +42,9 @@ module.exports = class InitCharacterCommand extends Command {
 		**Constitution:** ${character.constitution}
 		**Wisdom:** ${character.wisdom}
 		**Charisma:** ${character.charisma}
+		**Proficiencies:** ${character.proficientSkills.map(function (skill) {
+				return skill.key;
+			}).join(",")}
 		
 		Type "!initcharacter" to reroll.`);
 	}
@@ -53,6 +58,12 @@ module.exports = class InitCharacterCommand extends Command {
 		values.shift();
 		let sum = values.reduce((a, b) => a + b, 0);
 		return sum;
+	}
+
+	getRandomProficiencies() {
+		let availableSkills = this.dndRepository.getAvailableSkills();
+		let proficientSkills = getRandomItemsFromArray(availableSkills, 3);
+		return proficientSkills;
 	}
 
 	storeCharacterData(message, character) {

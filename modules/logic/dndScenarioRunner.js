@@ -1,6 +1,6 @@
 const config = require('../../config.json');
 const DnDRepository = require('../../modules/data/dndRepository');
-const RollSkillCheckCommand = require('../../commands/dnd/rollSkillCheck');
+const RollAbilityCheckCommand = require('../../commands/dnd/rollAbilityCheck');
 const DndScenarioParticipant = require('../models/dndScenarioParticipant');
 const { getRandomValue } = require('./utility');
 
@@ -29,6 +29,7 @@ module.exports = class DndScenarioRunner {
 		var max = config.dnd.scenarioMaxInterval;
 		var random = getRandomValue(max, min);
 		var milliseconds = Math.floor(random * 60000);
+
 		console.log(`setting random timer interval of ${milliseconds} milliseconds`);
 		this.scenarioTimeout = setTimeout(this.runRandomScenario, milliseconds);
 	}
@@ -52,8 +53,8 @@ module.exports = class DndScenarioRunner {
 			return;
 		}
 		let user = message.author;
-		let rollSkillCheck = new RollSkillCheckCommand(this.discordJsClient);
-		let result = rollSkillCheck.run(message, { skillIdentifier: this.currentScenario.skill });
+		let rollAbilityCheck = new RollAbilityCheckCommand(this.discordJsClient);
+		let result = rollAbilityCheck.runAsModule(message, { abilityIdentifier: this.currentScenario.ability });
 		this.participants.push(new DndScenarioParticipant(user, result));
 	}
 
@@ -124,7 +125,7 @@ module.exports = class DndScenarioRunner {
 			{
 				'description': 'A roving band of orcs attacks your party out of the forest. Roll a dexterity check to dodge their arrows.',
 				'difficultyClass': 12,
-				'skill': 'dexterity',
+				'ability': 'dexterity',
 				'successMessage': 'You successfully dodge aside, pulling your weapons to enter the fray.',
 				'failureMessage': 'You attempt to dodge, but are too slow, and immediately become a pincushion for several orc arrows.',
 				'critFailMessage': 'You take an arrow in the throat and are pinned to a nearby tree in dramatic fashion.',

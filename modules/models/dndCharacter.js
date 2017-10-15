@@ -6,59 +6,60 @@ module.exports = class DnDCharacter {
 		this.constitution = rawCharacter.constitution;
 		this.wisdom = rawCharacter.wisdom;
 		this.charisma = rawCharacter.charisma;
+		this.proficientSkills = rawCharacter.proficientSkills;
 	}
 
-	getSkillModifierByName(skillName) {
-		return this.getModifier(this[skillName]);
+	getAbilityModifierByName(abilityName) {
+		return this.getModifier(this[abilityName]);
 	}
 
-	getModifier(skillValue) {
-		if (skillValue === 1) {
+	getModifier(abilityValue) {
+		if (abilityValue === 1) {
 			return -5;
 		}
-		if (skillValue === 2 || skillValue === 3) {
+		if (abilityValue === 2 || abilityValue === 3) {
 			return -4;
 		}
-		if (skillValue === 4 || skillValue === 5) {
+		if (abilityValue === 4 || abilityValue === 5) {
 			return -3;
 		}
-		if (skillValue === 6 || skillValue === 7) {
+		if (abilityValue === 6 || abilityValue === 7) {
 			return -2;
 		}
-		if (skillValue === 8 || skillValue === 9) {
+		if (abilityValue === 8 || abilityValue === 9) {
 			return -1;
 		}
-		if (skillValue === 10 || skillValue === 11) {
+		if (abilityValue === 10 || abilityValue === 11) {
 			return 0;
 		}
-		if (skillValue === 12 || skillValue === 13) {
+		if (abilityValue === 12 || abilityValue === 13) {
 			return 1;
 		}
-		if (skillValue === 14 || skillValue === 15) {
+		if (abilityValue === 14 || abilityValue === 15) {
 			return 2;
 		}
-		if (skillValue === 16 || skillValue === 17) {
+		if (abilityValue === 16 || abilityValue === 17) {
 			return 3;
 		}
-		if (skillValue === 18 || skillValue === 19) {
+		if (abilityValue === 18 || abilityValue === 19) {
 			return 4;
 		}
-		if (skillValue === 20 || skillValue === 21) {
+		if (abilityValue === 20 || abilityValue === 21) {
 			return 5;
 		}
-		if (skillValue === 22 || skillValue === 23) {
+		if (abilityValue === 22 || abilityValue === 23) {
 			return 6;
 		}
-		if (skillValue === 24 || skillValue === 25) {
+		if (abilityValue === 24 || abilityValue === 25) {
 			return 7;
 		}
-		if (skillValue === 26 || skillValue === 27) {
+		if (abilityValue === 26 || abilityValue === 27) {
 			return 8;
 		}
-		if (skillValue === 28 || skillValue === 29) {
+		if (abilityValue === 28 || abilityValue === 29) {
 			return 9;
 		}
-		if (skillValue === 30) {
+		if (abilityValue === 30) {
 			return 10;
 		}
 	}

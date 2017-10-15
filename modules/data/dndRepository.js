@@ -46,4 +46,81 @@ module.exports = class DnDRepository extends BaseRepository {
 	setAllScenarios(guild, value) {
 		this.set(guild, 'dndscenario-data', value);
 	}
+
+	getAvailableSkills() {
+		return [
+			{
+				key: "acrobatics",
+				abilityKey: "dexterity"
+			},
+			{
+				key: "animalhandling",
+				abilityKey: "wisdom"
+			},
+			{
+				key: "arcana",
+				abilityKey: "intelligence"
+			},
+			{
+				key: "athletics",
+				abilityKey: "strength"
+			},
+			{
+				key: "deception",
+				abilityKey: "charisma"
+			},
+			{
+				key: "history",
+				abilityKey: "intelligence"
+			},
+			{
+				key: "insight",
+				abilityKey: "wisdom"
+			},
+			{
+				key: "intimidation",
+				abilityKey: "charisma"
+			},
+			{
+				key: "investigation",
+				abilityKey: "intelligence"
+			},
+			{
+				key: "medicine",
+				abilityKey: "wisdom"
+			},
+			{
+				key: "nature",
+				abilityKey: "intelligence"
+			},
+			{
+				key: "perception",
+				abilityKey: "wisdom"
+			},
+			{
+				key: "performance",
+				abilityKey: "charisma"
+			},
+			{
+				key: "persuasion",
+				abilityKey: "charisma"
+			},
+			{
+				key: "religion",
+				abilityKey: "intelligence"
+			},
+			{
+				key: "sleightofhand",
+				abilityKey: "dexterity"
+			},
+			{
+				key: "stealth",
+				abilityKey: "dexterity"
+			},
+			{
+				key: "survival",
+				abilityKey: "wisdom"
+			}
+		]
+	}
 }

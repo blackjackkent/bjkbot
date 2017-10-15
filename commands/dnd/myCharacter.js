@@ -24,12 +24,12 @@ module.exports = class MyCharacterCommand extends Command {
 		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		message.reply(`here is your character information!
 		
-		**Strength:** ${character.strength} (${character.getSkillModifierByName('strength')})
-		**Dexterity:** ${character.dexterity} (${character.getSkillModifierByName('dexterity')})
-		**Intelligence:** ${character.intelligence} (${character.getSkillModifierByName('intelligence')})
-		**Constitution:** ${character.constitution} (${character.getSkillModifierByName('constitution')})
-		**Wisdom:** ${character.wisdom} (${character.getSkillModifierByName('wisdom')})
-		**Charisma:** ${character.charisma} (${character.getSkillModifierByName('charisma')})
+		**Strength:** ${character.strength} (${character.getAbilityModifierByName('strength')})
+		**Dexterity:** ${character.dexterity} (${character.getAbilityModifierByName('dexterity')})
+		**Intelligence:** ${character.intelligence} (${character.getAbilityModifierByName('intelligence')})
+		**Constitution:** ${character.constitution} (${character.getAbilityModifierByName('constitution')})
+		**Wisdom:** ${character.wisdom} (${character.getAbilityModifierByName('wisdom')})
+		**Charisma:** ${character.charisma} (${character.getAbilityModifierByName('charisma')})
 		
 		Type "${config.prefix}initcharacter" to reroll.`);
 	}

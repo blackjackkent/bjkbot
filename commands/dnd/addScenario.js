@@ -2,6 +2,7 @@ const {
     Command
 } = require('discord.js-commando');
 const DnDRepository = require('../../modules/data/dndRepository');
+const { validateAbilityArgument } = require('../../modules/logic/dndUtility');
 const config = require('../../config.json');
 
 module.exports = class AddScenarioCommand extends Command {
@@ -22,16 +23,16 @@ module.exports = class AddScenarioCommand extends Command {
 				prompt: 'What is the DC of the challenge? (i.e. how high must a player roll in order to pass?)',
 				type: 'integer',
 			}, {
-				key: "skill",
-				prompt: "Which skill should this challenge be checked against? Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'.",
+				key: "ability",
+				prompt: "Which ability should this challenge be checked against? Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'.",
 				type: "string",
 				validate: function (value, message, arg) {
-					const valid = ['strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', 'charisma'];
-					if (!valid.includes(value)) {
-						return "Invalid skill. Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'.";
+					let isValid = validateAbilityArgument(value);
+					if (!isValid) {
+						return "Invalid ability. Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'."
 					}
 					return true;
-				},
+				}
 			}, {
 				key: 'successMessage',
 				prompt: `What should be displayed to users who pass the challenge? (Ex. 'You successfully dodge aside, pulling your weapons to enter the fray.')`,
@@ -56,12 +57,12 @@ module.exports = class AddScenarioCommand extends Command {
 		if (message.channel.name !== config.dnd.scenarioChannel) {
 			return;
 		}
-		const { description, difficultyClass, skill, successMessage, failureMessage, critSuccessMessage, critFailureMessage } = args;
+		const { description, difficultyClass, ability, successMessage, failureMessage, critSuccessMessage, critFailureMessage } = args;
 		let currentScenarios = this.dndRepository.getAllScenarios(message.guild);
 		currentScenarios.push({
 			description,
 			difficultyClass,
-			skill,
+			ability,
 			successMessage,
 			failureMessage,
 			critSuccessMessage,
