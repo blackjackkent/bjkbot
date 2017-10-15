@@ -59,6 +59,9 @@ module.exports = class AddScenarioCommand extends Command {
 		}
 		const { description, difficultyClass, ability, successMessage, failureMessage, critSuccessMessage, critFailureMessage } = args;
 		let currentScenarios = this.dndRepository.getAllScenarios(message.guild);
+		if (!currentScenarios) {
+			currentScenarios = [];
+		}
 		currentScenarios.push({
 			description,
 			difficultyClass,
