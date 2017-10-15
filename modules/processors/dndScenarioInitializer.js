@@ -1,4 +1,5 @@
 const DndScenarioRunner = require('../logic/dndScenarioRunner');
+
 module.exports = class DndScenarioInitializer {
 	constructor(client) {
 		this.discordJsClient = client;

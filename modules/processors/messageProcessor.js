@@ -12,4 +12,4 @@ module.exports = class MessageProcessor {
 			this.autoRegularProcessor.process(message, this.discordJsClient);
 		}
 	}
-}
+};

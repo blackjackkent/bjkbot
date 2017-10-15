@@ -1,7 +1,6 @@
 const {
     Command
 } = require('discord.js-commando');
-const config = require('../../config.json');
 
 module.exports = class DemoResponseCommand extends Command {
 	constructor(client) {
@@ -14,8 +13,8 @@ module.exports = class DemoResponseCommand extends Command {
 			examples: ['demo']
 		});
 	}
+
 	run(message) {
-		console.log(message);
 		message.say(`${message.author.toString()} Hello!`);
 	}
-}
+};

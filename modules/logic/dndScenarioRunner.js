@@ -28,8 +28,7 @@ module.exports = class DndScenarioRunner {
 		var min = config.dnd.scenarioMinInterval;
 		var max = config.dnd.scenarioMaxInterval;
 		var random = getRandomValue(max, min);
-		//var milliseconds = Math.floor(random * 60000);
-		let milliseconds = 100;
+		var milliseconds = Math.floor(random * 60000);
 		console.log(`setting random timer interval of ${milliseconds} milliseconds`);
 		this.scenarioTimeout = setTimeout(this.runRandomScenario, milliseconds);
 	}

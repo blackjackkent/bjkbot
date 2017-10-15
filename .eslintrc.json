@@ -1,0 +1,26 @@
+{
+	"extends": "airbnb-base",
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
+	"rules": {
+		"comma-dangle": [
+			"error",
+			"never"
+		],
+		"linebreak-style": [
+			"error",
+			"windows"
+		],
+		"indent": [
+			"error",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"no-tabs": "off",
+		"class-methods-use-this": "off",
+		"no-plusplus": "off"
+	}
+}
