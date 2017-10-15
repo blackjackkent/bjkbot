@@ -29,12 +29,14 @@ module.exports = class DndScenarioRunner {
 		var max = config.dnd.scenarioMaxInterval;
 		var random = getRandomValue(max, min);
 		var milliseconds = Math.floor(random * 60000);
-
 		console.log(`setting random timer interval of ${milliseconds} milliseconds`);
 		this.scenarioTimeout = setTimeout(this.runRandomScenario, milliseconds);
 	}
 
 	runRandomScenario() {
+		if (!this.gamingChannel) {
+			return;
+		}
 		this.currentScenario = this.dndRepository.getRandomScenario(this.discordGuild);
 		this.gamingChannel.send(`Time for an adventure!`);
 		this.gamingChannel.send(this.currentScenario.description);
