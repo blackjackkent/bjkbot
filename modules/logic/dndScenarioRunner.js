@@ -14,6 +14,9 @@ module.exports = class DndScenarioRunner {
 		this.participationTimeout = null;
 		this.currentScenario = null;
 		this.participants = [];
+		this.handleParticipationMessage = this.handleParticipationMessage.bind(this);
+		this.runRandomScenario = this.runRandomScenario.bind(this);
+		this.clearListener = this.clearListener.bind(this);
 	}
 
 	run() {
@@ -28,7 +31,7 @@ module.exports = class DndScenarioRunner {
 		//var milliseconds = Math.floor(random * 60000);
 		let milliseconds = 100;
 		console.log(`setting random timer interval of ${milliseconds} milliseconds`);
-		this.scenarioTimeout = setTimeout(this.runRandomScenario.bind(this), milliseconds);
+		this.scenarioTimeout = setTimeout(this.runRandomScenario, milliseconds);
 	}
 
 	runRandomScenario() {
@@ -38,8 +41,8 @@ module.exports = class DndScenarioRunner {
 		this.gamingChannel.send(`Type ${config.prefix}join to participate!`)
 		this.listeningForParticipation = true;
 		this.participants = [];
-		this.participationTimeout = setTimeout(this.clearListener.bind(this), 30000);
-		this.discordJsClient.on('message', this.handleParticipationMessage.bind(this));
+		this.participationTimeout = setTimeout(this.clearListener, 30000);
+		this.discordJsClient.on('message', this.handleParticipationMessage);
 	}
 
 	handleParticipationMessage(message) {
@@ -63,13 +66,14 @@ module.exports = class DndScenarioRunner {
 		this.printFailure();
 		this.printCritFailure();
 		this.currentScenario = null;
+		this.setRandomTimerInterval();
 	}
 
 	printResult(participants, resultMessage) {
 		let users = participants.map(function (participant) { return participant.user; });
 		let message = users.join(', ');
 		message += ": " + resultMessage;
-		this.gamingChannel.send(message)
+		this.gamingChannel.send(message);
 	}
 
 	printCritSuccess() {

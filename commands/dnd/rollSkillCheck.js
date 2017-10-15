@@ -38,7 +38,7 @@ module.exports = class RollSkillCheckCommand extends Command {
 				reply += 'Critical Success! ';
 			}
 			if (result.isCriticalFailure) {
-				reply += 'Critica Failure! :( ';
+				reply += 'Critical Failure! :( ';
 			}
 			reply += `You rolled a natural ${result.naturalRoll}. `;
 			reply += `With your ${skillIdentifier} modifier of ${modifier}, your total is ${result.total}!`

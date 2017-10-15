@@ -1,5 +1,6 @@
 function getRandomValue(max, min) {
-	return Math.random() * (max - min) + min;
+	let actualMax = max + 1;
+	return Math.floor(Math.random() * (actualMax - min) + min);
 }
 
 module.exports = {
