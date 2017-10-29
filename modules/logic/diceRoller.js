@@ -1,8 +1,8 @@
 const DiceRollResult = require('../models/diceRollResult');
 module.exports = class DiceRoller {
-	getD20RollResult(modifier) {
+	getD20RollResult(modifier, proficiencyBonus = null) {
 		let naturalRoll = this.roll('d20');
-		return new DiceRollResult(naturalRoll, modifier);
+		return new DiceRollResult(naturalRoll, modifier, proficiencyBonus);
 	}
 
 	roll(phrase) {

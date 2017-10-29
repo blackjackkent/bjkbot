@@ -14,7 +14,7 @@ module.exports = class RollAbilityCheckCommand extends Command {
 			memberName: 'rollabilitycheck',
 			guildOnly: true,
 			description: `Rolls a d20 for the requested ability based on your saved character's modifier`,
-			examples: ['  strength', 'rollabilitycheck dexterity'],
+			examples: ['rollabilitycheck strength', 'rollabilitycheck dexterity'],
 			args: [{
 				key: 'abilityIdentifier',
 				prompt: `What ability do you want to roll a check for? Enter 'strength', 'dexterity', 'intelligence', 'wisdom', 'constitution', or 'charisma'.`,
@@ -44,7 +44,7 @@ module.exports = class RollAbilityCheckCommand extends Command {
 		const { abilityIdentifier } = args;
 		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		if (!character) {
-			message.reply(`You do not have a character saved yet! Type \`!initcharacter\` to create a character to play with.`);
+			message.reply(`You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`);
 			return;
 		}
 		let modifier = character.getAbilityModifierByName(abilityIdentifier);

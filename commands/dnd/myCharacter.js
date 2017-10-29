@@ -30,6 +30,9 @@ module.exports = class MyCharacterCommand extends Command {
 		**Constitution:** ${character.constitution} (${character.getAbilityModifierByName('constitution')})
 		**Wisdom:** ${character.wisdom} (${character.getAbilityModifierByName('wisdom')})
 		**Charisma:** ${character.charisma} (${character.getAbilityModifierByName('charisma')})
+		**Proficiencies:** ${character.proficientSkills.map(function (skill) {
+				return skill.key;
+			}).join(",")}
 		
 		Type "${config.prefix}initcharacter" to reroll.`);
 	}
