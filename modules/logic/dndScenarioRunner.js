@@ -57,18 +57,31 @@ module.exports = class DndScenarioRunner {
 		let user = message.author;
 		let rollAbilityCheck = new RollAbilityCheckCommand(this.discordJsClient);
 		let result = rollAbilityCheck.runAsModule(message, { abilityIdentifier: this.currentScenario.ability });
+		if (!result) {
+			return;
+		}
 		this.participants.push(new DndScenarioParticipant(user, result));
 	}
 
 	clearListener() {
 		this.discordJsClient.removeListener('message', this.handleParticipationMessage);
 		this.gamingChannel.send('Scenario closed!');
+		if (!this.participants || this.participants.length == 0) {
+			this.printNoParticipants();
+			this.currentScenario = null;
+			this.setRandomTimerInterval();
+			return;
+		}
 		this.printCritSuccess();
 		this.printSuccess();
 		this.printFailure();
 		this.printCritFailure();
 		this.currentScenario = null;
 		this.setRandomTimerInterval();
+	}
+
+	printNoParticipants() {
+		this.gamingChannel.send(`No one joined the adventure! Resetting...`);
 	}
 
 	printResult(participants, resultMessage) {

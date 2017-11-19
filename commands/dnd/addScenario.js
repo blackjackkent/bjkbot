@@ -74,17 +74,5 @@ module.exports = class AddScenarioCommand extends Command {
 		});
 		this.dndRepository.setAllScenarios(message.guild, currentScenarios);
 		message.reply('Your scenario has been saved! It will be displayed randomly to the chat at a future point!');
-		this.clearChannel(message);
-	}
-
-	clearChannel(message) {
-		message.channel.fetchMessages().then(messages => {
-			let messagesArr = messages.array();
-			let messageCount = messagesArr.length;
-
-			for (let i = 0; i < messageCount; i++) {
-				messagesArr[i].delete();
-			}
-		});
 	}
 }

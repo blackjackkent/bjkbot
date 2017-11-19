@@ -35,6 +35,9 @@ module.exports = class RollAbilityCheckCommand extends Command {
 	run(message, args) {
 		try {
 			const executionResult = this.executeRoll(message, args);
+			if (!executionResult) {
+				return;
+			}
 			message.reply(executionResult.reply);
 		} catch (error) {
 			console.log(error);
@@ -46,7 +49,7 @@ module.exports = class RollAbilityCheckCommand extends Command {
 		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		if (!character) {
 			message.reply(`You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`);
-			return;
+			return null;
 		}
 		let identifier = getCleanAbilityName(abilityIdentifier);
 		let modifier = character.getAbilityModifierByName(identifier);
@@ -60,6 +63,9 @@ module.exports = class RollAbilityCheckCommand extends Command {
 
 	runAsModule(message, args) {
 		let executionResult = this.executeRoll(message, args);
+		if (!executionResult) {
+			return null;
+		}
 		message.reply(executionResult.reply);
 		return executionResult.result;
 	}
