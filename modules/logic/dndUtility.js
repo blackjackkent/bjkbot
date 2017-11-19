@@ -1,3 +1,17 @@
+const {
+	STRENGTH,
+	STRENGTH_ABBREVIATION,
+	DEXTERITY,
+	DEXTERITY_ABBREVIATION,
+	CONSTITUTION,
+	CONSTITUTION_ABBREVIATION,
+	INTELLIGENCE,
+	INTELLIGENCE_ABBREVIATION,
+	WISDOM,
+	WISDOM_ABBREVIATION,
+	CHARISMA,
+	CHARISMA_ABBREVIATION
+} = require('../constants/dndConstants');
 function getCheckResultMessage(result, abilityIdentifier, modifier, proficiencyBonus = null) {
 	let reply = '';
 	if (result.isCriticalSuccess) {
@@ -16,7 +30,20 @@ function getCheckResultMessage(result, abilityIdentifier, modifier, proficiencyB
 }
 
 function validateAbilityArgument(value) {
-	const valid = ['strength', 'str', 'constitution', 'con', 'intelligence', 'int', 'wisdom', 'wis', 'dexterity', 'dex', 'charisma', 'cha'];
+	const valid = [
+		STRENGTH,
+		STRENGTH_ABBREVIATION,
+		CONSTITUTION,
+		CONSTITUTION_ABBREVIATION,
+		INTELLIGENCE,
+		INTELLIGENCE_ABBREVIATION,
+		WISDOM,
+		WISDOM_ABBREVIATION,
+		DEXTERITY,
+		DEXTERITY_ABBREVIATION,
+		CHARISMA,
+		CHARISMA_ABBREVIATION
+	];
 	if (!valid.includes(value)) {
 		return false;
 	}
@@ -32,23 +59,23 @@ function validateSkillArgument(value) {
 }
 
 function getCleanAbilityName(abilityIdentifier) {
-	if (abilityIdentifier.substring(0, 3) === 'str') {
-		return 'strength';
+	if (abilityIdentifier.substring(0, 3) === STRENGTH_ABBREVIATION) {
+		return STRENGTH;
 	}
-	if (abilityIdentifier.substring(0, 3) === 'con') {
-		return 'constitution';
+	if (abilityIdentifier.substring(0, 3) === CONSTITUTION_ABBREVIATION) {
+		return CONSTITUTION;
 	}
-	if (abilityIdentifier.substring(0, 3) === 'dex') {
-		return 'dexterity';
+	if (abilityIdentifier.substring(0, 3) === DEXTERITY_ABBREVIATION) {
+		return DEXTERITY;
 	}
-	if (abilityIdentifier.substring(0, 3) === 'wis') {
-		return 'wisdom';
+	if (abilityIdentifier.substring(0, 3) === WISDOM_ABBREVIATION) {
+		return WISDOM;
 	}
-	if (abilityIdentifier.substring(0, 3) === 'cha') {
-		return 'charisma';
+	if (abilityIdentifier.substring(0, 3) === CHARISMA_ABBREVIATION) {
+		return CHARISMA;
 	}
-	if (abilityIdentifier.substring(0, 3) === 'int') {
-		return 'intelligence';
+	if (abilityIdentifier.substring(0, 3) === INTELLIGENCE_ABBREVIATION) {
+		return INTELLIGENCE;
 	}
 	return null;
 }
@@ -63,75 +90,75 @@ function getAvailableSkills() {
 	return [
 		{
 			key: "acrobatics",
-			abilityKey: "dexterity"
+			abilityKey: DEXTERITY
 		},
 		{
 			key: "animalhandling",
-			abilityKey: "wisdom"
+			abilityKey: WISDOM
 		},
 		{
 			key: "arcana",
-			abilityKey: "intelligence"
+			abilityKey: INTELLIGENCE
 		},
 		{
 			key: "athletics",
-			abilityKey: "strength"
+			abilityKey: STRENGTH
 		},
 		{
 			key: "deception",
-			abilityKey: "charisma"
+			abilityKey: CHARISMA
 		},
 		{
 			key: "history",
-			abilityKey: "intelligence"
+			abilityKey: INTELLIGENCE
 		},
 		{
 			key: "insight",
-			abilityKey: "wisdom"
+			abilityKey: WISDOM
 		},
 		{
 			key: "intimidation",
-			abilityKey: "charisma"
+			abilityKey: CHARISMA
 		},
 		{
 			key: "investigation",
-			abilityKey: "intelligence"
+			abilityKey: INTELLIGENCE
 		},
 		{
 			key: "medicine",
-			abilityKey: "wisdom"
+			abilityKey: WISDOM
 		},
 		{
 			key: "nature",
-			abilityKey: "intelligence"
+			abilityKey: INTELLIGENCE
 		},
 		{
 			key: "perception",
-			abilityKey: "wisdom"
+			abilityKey: WISDOM
 		},
 		{
 			key: "performance",
-			abilityKey: "charisma"
+			abilityKey: CHARISMA
 		},
 		{
 			key: "persuasion",
-			abilityKey: "charisma"
+			abilityKey: CHARISMA
 		},
 		{
 			key: "religion",
-			abilityKey: "intelligence"
+			abilityKey: INTELLIGENCE
 		},
 		{
 			key: "sleightofhand",
-			abilityKey: "dexterity"
+			abilityKey: DEXTERITY
 		},
 		{
 			key: "stealth",
-			abilityKey: "dexterity"
+			abilityKey: DEXTERITY
 		},
 		{
 			key: "survival",
-			abilityKey: "wisdom"
+			abilityKey: WISDOM
 		}
 	]
 }

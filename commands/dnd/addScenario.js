@@ -3,6 +3,7 @@ const {
 } = require('discord.js-commando');
 const DnDRepository = require('../../modules/data/dndRepository');
 const { validateAbilityArgument } = require('../../modules/logic/dndUtility');
+const { STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA } = require('../../modules/constants/dndConstants');
 const config = require('../../config.json');
 
 module.exports = class AddScenarioCommand extends Command {
@@ -24,12 +25,12 @@ module.exports = class AddScenarioCommand extends Command {
 				type: 'integer',
 			}, {
 				key: "ability",
-				prompt: "Which ability should this challenge be checked against? Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'.",
+				prompt: `Which ability should this challenge be checked against? Type \`${STRENGTH}\`, \`${CONSTITUTION}\`, \`${INTELLIGENCE}\`, \`${WISDOM}\`, \`${DEXTERITY}\`, or \`${CHARISMA}\`.`,
 				type: "string",
 				validate: function (value, message, arg) {
 					let isValid = validateAbilityArgument(value);
 					if (!isValid) {
-						return "Invalid ability. Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'."
+						return `Invalid ability. Type \`${STRENGTH}\`, \`${CONSTITUTION}\`, \`${INTELLIGENCE}\`, \`${WISDOM}\`, \`${DEXTERITY}, or \`${CHARISMA}\`.`
 					}
 					return true;
 				}

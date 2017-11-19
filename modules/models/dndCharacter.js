@@ -1,4 +1,5 @@
 const config = require('../../config.json');
+const { STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA } = require('../../modules/constants/dndConstants');
 
 module.exports = class DnDCharacter {
 	constructor(rawCharacter) {
@@ -14,12 +15,12 @@ module.exports = class DnDCharacter {
 	toString() {
 		const message = `here is your character information!
 		
-		**Strength:** ${this.strength} (${this.getAbilityModifierByName('strength')})
-		**Dexterity:** ${this.dexterity} (${this.getAbilityModifierByName('dexterity')})
-		**Intelligence:** ${this.intelligence} (${this.getAbilityModifierByName('intelligence')})
-		**Constitution:** ${this.constitution} (${this.getAbilityModifierByName('constitution')})
-		**Wisdom:** ${this.wisdom} (${this.getAbilityModifierByName('wisdom')})
-		**Charisma:** ${this.charisma} (${this.getAbilityModifierByName('charisma')})
+		**Strength:** ${this.strength} (${this.getAbilityModifierByName(STRENGTH)})
+		**Dexterity:** ${this.dexterity} (${this.getAbilityModifierByName(DEXTERITY)})
+		**Intelligence:** ${this.intelligence} (${this.getAbilityModifierByName(INTELLIGENCE)})
+		**Constitution:** ${this.constitution} (${this.getAbilityModifierByName(CONSTITUTION)})
+		**Wisdom:** ${this.wisdom} (${this.getAbilityModifierByName(WISDOM)})
+		**Charisma:** ${this.charisma} (${this.getAbilityModifierByName(CHARISMA)})
 		**Proficiencies:** ${this.proficientSkills.map(function (skill) {
 				return skill.key;
 			}).join(", ")}

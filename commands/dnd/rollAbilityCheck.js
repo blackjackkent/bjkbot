@@ -3,6 +3,7 @@ const {
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
+const { STRENGTH, DEXTERITY, DEXTERITY_ABBREVIATION, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA } = require('../../modules/constants/dndConstants');
 const { getCheckResultMessage, validateAbilityArgument, getCleanAbilityName } = require('../../modules/logic/dndUtility');
 const config = require('../../config.json');
 
@@ -14,15 +15,15 @@ module.exports = class RollAbilityCheckCommand extends Command {
 			memberName: 'rollabilitycheck',
 			guildOnly: true,
 			description: `Rolls a d20 for the requested ability based on your saved character's modifier`,
-			examples: ['rollabilitycheck strength', 'rollabilitycheck dexterity'],
+			examples: [`rollabilitycheck ${STRENGTH}`, `rollabilitycheck ${DEXTERITY_ABBREVIATION}`],
 			args: [{
 				key: 'abilityIdentifier',
-				prompt: `What ability do you want to roll a check for? Enter 'strength', 'dexterity', 'intelligence', 'wisdom', 'constitution', or 'charisma'.`,
+				prompt: `What ability do you want to roll a check for? Enter \`${STRENGTH}\`, \`${DEXTERITY}\`, \`${INTELLIGENCE}\`, \`${WISDOM}\`, \`${CONSTITUTION}\`, or \`${CHARISMA}\`.`,
 				type: 'string',
 				validate: function (value, message, arg) {
 					let isValid = validateAbilityArgument(value);
 					if (!isValid) {
-						return "Invalid ability. Type 'strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', or 'charisma'."
+						return `Invalid ability. Type \`${STRENGTH}\`, \`${CONSTITUTION}\`, \`${INTELLIGENCE}\`, \`${WISDOM}\`, \`${DEXTERITY}\`, or \`${CHARISMA}\`.`
 					}
 					return true;
 				}

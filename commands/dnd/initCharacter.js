@@ -5,6 +5,7 @@ const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
 const DndCharacter = require('../../modules/models/dndCharacter');
 const config = require('../../config.json');
+const { STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA } = require('../../modules/constants/dndConstants');
 const { getRandomItemsFromArray } = require('../../modules/logic/utility');
 const { getAvailableSkills } = require('../../modules/logic/dndUtility');
 
@@ -27,12 +28,12 @@ module.exports = class InitCharacterCommand extends Command {
 
 	initCharacter(message) {
 		let characterData = {
-			strength: this.generateScore(),
-			dexterity: this.generateScore(),
-			intelligence: this.generateScore(),
-			constitution: this.generateScore(),
-			wisdom: this.generateScore(),
-			charisma: this.generateScore(),
+			[STRENGTH]: this.generateScore(),
+			[DEXTERITY]: this.generateScore(),
+			[INTELLIGENCE]: this.generateScore(),
+			[CONSTITUTION]: this.generateScore(),
+			[WISDOM]: this.generateScore(),
+			[CHARISMA]: this.generateScore(),
 			proficientSkills: this.getRandomProficiencies()
 		}
 		let character = new DndCharacter(characterData);
