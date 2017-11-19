@@ -30,24 +30,27 @@ module.exports = class ResetPointsCommand extends Command {
 			message.reply("You do not have permission to manage roles in this server!");
 			return;
 		}
-		let userData = this.client.provider.get(message.guild, 'autoregular-data');
+		let userData = this.client.provider.get(message.guild, 'autorole-data');
 		let userKey = user.toString();
 		if (userData.hasOwnProperty(userKey)) {
 			userData[userKey] = 0;
 		}
-		this.client.provider.set(message.guild, 'autoregular-data', userData);
+		this.client.provider.set(message.guild, 'autorole-data', userData);
 		message.reply(`Message count for user reset to 0!`);
 		let affectedUser = message.guild.members.find(val => val.user.id === user.id);
-		this.removeRegularRoleIfApplicable(message, affectedUser);
+		this.removeAllManagedRoles(message, affectedUser);
 	}
 
-	removeRegularRoleIfApplicable(message, affectedUser) {
+	removeAllManagedRoles(message, affectedUser) {
 		let currentRoles = affectedUser.roles;
-		let isAlreadyRegular = currentRoles.find('name', config.autoRegular.regularRoleName) != null;
-		if (isAlreadyRegular) {
-			let regularRole = message.guild.roles.find('name', config.autoRegular.regularRoleName);
-			affectedUser.removeRole(regularRole, 'Point count was reset.');
-			message.reply(`user was removed from ${config.autoRegular.regularRoleName}!`);
-		}
+		let managedRoles = config.autoRoles.levels;
+		managedRoles.forEach((role) => {
+			if (currentRoles.find('name', role.roleName) == null) {
+				return;
+			}
+			let discordRole = message.guild.roles.find('name', role.roleName);
+			affectedUser.removeRole(discordRole, 'Point count was reset.');
+			message.reply(`user was removed from ${role.roleName}!`);
+		});
 	}
 }
