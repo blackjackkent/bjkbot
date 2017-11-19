@@ -3,7 +3,7 @@ const {
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
-const { getCheckResultMessage, validateAbilityArgument } = require('../../modules/logic/dndUtility');
+const { getCheckResultMessage, validateAbilityArgument, getCleanAbilityName } = require('../../modules/logic/dndUtility');
 const config = require('../../config.json');
 
 module.exports = class RollAbilityCheckCommand extends Command {
@@ -47,9 +47,10 @@ module.exports = class RollAbilityCheckCommand extends Command {
 			message.reply(`You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`);
 			return;
 		}
-		let modifier = character.getAbilityModifierByName(abilityIdentifier);
+		let identifier = getCleanAbilityName(abilityIdentifier);
+		let modifier = character.getAbilityModifierByName(identifier);
 		let result = this.diceRoller.getD20RollResult(modifier);
-		let reply = getCheckResultMessage(result, abilityIdentifier, modifier);
+		let reply = getCheckResultMessage(result, identifier, modifier);
 		return {
 			reply,
 			result

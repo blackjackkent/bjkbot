@@ -16,7 +16,7 @@ function getCheckResultMessage(result, abilityIdentifier, modifier, proficiencyB
 }
 
 function validateAbilityArgument(value) {
-	const valid = ['strength', 'constitution', 'intelligence', 'wisdom', 'dexterity', 'charisma'];
+	const valid = ['strength', 'str', 'constitution', 'con', 'intelligence', 'int', 'wisdom', 'wis', 'dexterity', 'dex', 'charisma', 'cha'];
 	if (!valid.includes(value)) {
 		return false;
 	}
@@ -29,6 +29,28 @@ function validateSkillArgument(value) {
 		return false;
 	}
 	return true;
+}
+
+function getCleanAbilityName(abilityIdentifier) {
+	if (abilityIdentifier.substring(0, 3) === 'str') {
+		return 'strength';
+	}
+	if (abilityIdentifier.substring(0, 3) === 'con') {
+		return 'constitution';
+	}
+	if (abilityIdentifier.substring(0, 3) === 'dex') {
+		return 'dexterity';
+	}
+	if (abilityIdentifier.substring(0, 3) === 'wis') {
+		return 'wisdom';
+	}
+	if (abilityIdentifier.substring(0, 3) === 'cha') {
+		return 'charisma';
+	}
+	if (abilityIdentifier.substring(0, 3) === 'int') {
+		return 'intelligence';
+	}
+	return null;
 }
 
 function getAbilityForSkill(skillIdentifier) {
@@ -119,5 +141,6 @@ module.exports = {
 	validateAbilityArgument: validateAbilityArgument,
 	validateSkillArgument: validateSkillArgument,
 	getAbilityForSkill: getAbilityForSkill,
-	getAvailableSkills: getAvailableSkills
+	getAvailableSkills: getAvailableSkills,
+	getCleanAbilityName: getCleanAbilityName
 }
