@@ -22,18 +22,6 @@ module.exports = class MyCharacterCommand extends Command {
 
 	displayCharacter(message) {
 		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
-		message.reply(`here is your character information!
-		
-		**Strength:** ${character.strength} (${character.getAbilityModifierByName('strength')})
-		**Dexterity:** ${character.dexterity} (${character.getAbilityModifierByName('dexterity')})
-		**Intelligence:** ${character.intelligence} (${character.getAbilityModifierByName('intelligence')})
-		**Constitution:** ${character.constitution} (${character.getAbilityModifierByName('constitution')})
-		**Wisdom:** ${character.wisdom} (${character.getAbilityModifierByName('wisdom')})
-		**Charisma:** ${character.charisma} (${character.getAbilityModifierByName('charisma')})
-		**Proficiencies:** ${character.proficientSkills.map(function (skill) {
-				return skill.key;
-			}).join(",")}
-		
-		Type "${config.prefix}initcharacter" to reroll.`);
+		message.reply(character.toString());
 	}
 }

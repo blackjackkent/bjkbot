@@ -1,3 +1,5 @@
+const config = require('../../config.json');
+
 module.exports = class DnDCharacter {
 	constructor(rawCharacter) {
 		this.strength = rawCharacter.strength;
@@ -7,6 +9,23 @@ module.exports = class DnDCharacter {
 		this.wisdom = rawCharacter.wisdom;
 		this.charisma = rawCharacter.charisma;
 		this.proficientSkills = rawCharacter.proficientSkills;
+	}
+
+	toString() {
+		const message = `here is your character information!
+		
+		**Strength:** ${this.strength} (${this.getAbilityModifierByName('strength')})
+		**Dexterity:** ${this.dexterity} (${this.getAbilityModifierByName('dexterity')})
+		**Intelligence:** ${this.intelligence} (${this.getAbilityModifierByName('intelligence')})
+		**Constitution:** ${this.constitution} (${this.getAbilityModifierByName('constitution')})
+		**Wisdom:** ${this.wisdom} (${this.getAbilityModifierByName('wisdom')})
+		**Charisma:** ${this.charisma} (${this.getAbilityModifierByName('charisma')})
+		**Proficiencies:** ${this.proficientSkills.map(function (skill) {
+				return skill.key;
+			}).join(", ")}
+		
+		Type \`${config.prefix}initcharacter\` to reroll.`;
+		return message;
 	}
 
 	getAbilityModifierByName(abilityName) {

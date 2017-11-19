@@ -3,6 +3,7 @@ const {
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
+const DndCharacter = require('../../modules/models/dndCharacter');
 const config = require('../../config.json');
 const { getRandomItemsFromArray } = require('../../modules/logic/utility');
 const { getAvailableSkills } = require('../../modules/logic/dndUtility');
@@ -25,7 +26,7 @@ module.exports = class InitCharacterCommand extends Command {
 	}
 
 	initCharacter(message) {
-		let character = {
+		let characterData = {
 			strength: this.generateScore(),
 			dexterity: this.generateScore(),
 			intelligence: this.generateScore(),
@@ -34,20 +35,9 @@ module.exports = class InitCharacterCommand extends Command {
 			charisma: this.generateScore(),
 			proficientSkills: this.getRandomProficiencies()
 		}
+		let character = new DndCharacter(characterData);
 		this.storeCharacterData(message, character);
-		message.reply(`your character has been created!
-		
-		**Strength:** ${character.strength}
-		**Dexterity:** ${character.dexterity}
-		**Intelligence:** ${character.intelligence}
-		**Constitution:** ${character.constitution}
-		**Wisdom:** ${character.wisdom}
-		**Charisma:** ${character.charisma}
-		**Proficiencies:** ${character.proficientSkills.map(function (skill) {
-				return skill.key;
-			}).join(",")}
-		
-		Type "${config.prefix}initcharacter" to reroll.`);
+		message.reply(character.toString());
 	}
 
 	generateScore() {

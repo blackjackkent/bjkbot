@@ -20,7 +20,8 @@ client.registry
 		['spoiler', 'Spoiler'],
 		['points', 'Points'],
 		['dnd', 'DND'],
-		['wiki', 'Wiki']
+		['wiki', 'Wiki'],
+		['customcommands', 'Custom Commands']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
