@@ -15,13 +15,16 @@ module.exports = class PointsCommand extends Command {
 		});
 	}
 	run(message) {
-		let userData = this.client.provider.get(message.guild, 'autoregular-data');
+		let userData = this.client.provider.get(message.guild, 'autorole-data');
 		if (userData == null) {
 			message.say("Error retrieving user data.");
 			return;
 		}
 		var senderKey = message.author.toString();
 		var count = userData[senderKey];
-		message.reply(`you have accumulated ${count} points!`);
+		let unacquiredRoles = config.autoRoles.levels.filter(l => l.requiredMessageCount > count);
+		var lowestUnacquiredRoleMessageCount = Math.min.apply(Math, unacquiredRoles.map(function (level) { return level.requiredMessageCount; }));
+		var lowestUnacquiredRole = unacquiredRoles.find(function (level) { return level.requiredMessageCount === lowestUnacquiredRoleMessageCount; })
+		message.reply(`you have accumulated ${count} points! The next role you can acquire is ${lowestUnacquiredRole.roleName} at ${lowestUnacquiredRoleMessageCount} points!`);
 	}
 }
