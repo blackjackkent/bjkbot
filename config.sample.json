@@ -1,18 +1,27 @@
 {
 	"token": "token here",
-	"prefix": "##",
-	"ownerId": "123456",
+	"prefix": "$",
+	"ownerId": "owner id here",
+	"botDisplayGame": "Mass Effect",
 	"spoiler": {
 		"spoilerChannel": "spoiler-discussion",
 		"generalChannel": "general"
 	},
-	"autoRegular": {
-		"enabled": true,
-		"requiredMessageCount": 5,
-		"regularRoleName": "Regulars"
+	"autoRoles": {
+		"enabled": false,
+		"levels": [
+			{
+				"requiredMessageCount": 100,
+				"roleName": "Regulars"
+			}
+		]
 	},
 	"dnd": {
-		"gamingChannel": "gaming"
+		"gamingChannel": "gaming",
+		"scenarioChannel": "gaming-scenarios",
+		"scenarioRunningEnabled": false,
+		"scenarioMaxInterval": 60,
+		"scenarioMinInterval": 20
 	},
 	"wiki": {
 		"language": "en"
