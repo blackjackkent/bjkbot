@@ -1,6 +1,9 @@
 const {
     Command
 } = require('discord.js-commando');
+var google = require('googleapis');
+const youtube = google.youtube('v3');
+const config = require('../../config.json');
 
 module.exports = class AddSongCommand extends Command {
 	constructor(client) {
@@ -19,7 +22,29 @@ module.exports = class AddSongCommand extends Command {
 		});
 	}
 
-	run(message) {
-		message.say(`${message.author.toString()} Hello!`);
+	run(message, args) {
+		const {
+			searchPhrase
+		} = args;
+		const parameters = {
+			'auth': config.music.youTubeApiKey,
+			'maxResults': '1',
+			'part': 'snippet',
+			'q': searchPhrase,
+			'type': 'video'
+		}
+		youtube.search.list(parameters, function (err, response) {
+			if (err) {
+				message.say('There was an error searching for your query. Please try again later.');
+				return;
+			}
+			if (!response.items || response.items.length[0]) {
+				message.say('No results found for your query. :( ');
+				return;
+			}
+			const result = response.items[0];
+			const url = "https://www.youtube.com/watch?v=" + result.id.videoId;
+			message.say(`${url}`);
+		});
 	}
 };
