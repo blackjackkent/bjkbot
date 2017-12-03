@@ -4,6 +4,8 @@ const {
 var google = require('googleapis');
 const youtube = google.youtube('v3');
 const config = require('../../config.json');
+const MusicRepository = require('../../modules/data/musicRepository');
+const uuidv4 = require('uuid/v4');
 
 module.exports = class AddSongCommand extends Command {
 	constructor(client) {
@@ -20,6 +22,7 @@ module.exports = class AddSongCommand extends Command {
 				type: 'string'
 			}]
 		});
+		this.musicRepository = new MusicRepository(client);
 	}
 
 	run(message, args) {
@@ -33,6 +36,7 @@ module.exports = class AddSongCommand extends Command {
 			'q': searchPhrase,
 			'type': 'video'
 		}
+		const command = this;
 		youtube.search.list(parameters, function (err, response) {
 			if (err) {
 				message.say('There was an error searching for your query. Please try again later.');
@@ -43,8 +47,22 @@ module.exports = class AddSongCommand extends Command {
 				return;
 			}
 			const result = response.items[0];
-			const url = "https://www.youtube.com/watch?v=" + result.id.videoId;
-			message.say(`${url}`);
+			command.printSearchResult(result, message);
+			command.saveSearchResult(result, message);
 		});
+	}
+
+	printSearchResult(result, message) {
+		message.say(`Added "${result.snippet.title}" to the queue!`);
+	}
+
+	saveSearchResult(result, message) {
+		const queueItem = {
+			id: uuidv4(),
+			requesterId: message.author.toString(),
+			songUrl: "https://www.youtube.com/watch?v=" + result.id.videoId,
+			songTitle: result.snippet.title
+		};
+		this.musicRepository.addSongToQueue(message.guild, queueItem);
 	}
 };
