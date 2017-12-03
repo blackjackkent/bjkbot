@@ -4,6 +4,16 @@ module.exports = class MusicRepository extends BaseRepository {
 	constructor(client) {
 		super(client);
 	}
+	getSongAtQueuePosition(guild, queuePosition) {
+		let data = this.get(guild, 'music-data');
+		return data[queuePosition];
+	}
+	deleteSongAtQueuePosition(guild, queuePosition) {
+		let data = this.get(guild, 'music-data');
+		data.splice(queuePosition, 1);
+		this.set(guild, 'music-data', data);
+	}
+
 	addSongToQueue(guild, queueItem) {
 		let data = this.get(guild, 'music-data');
 		if (!data) {
