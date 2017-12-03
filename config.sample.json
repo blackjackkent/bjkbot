@@ -7,6 +7,12 @@
 		"spoilerChannel": "spoiler-discussion",
 		"generalChannel": "general"
 	},
+	"music": {
+		"enabled": true,
+		"musicControlChannel": "jukebox-control",
+		"musicVoiceChannel": "jukebox",
+		"youTubeApiKey": null
+	},
 	"autoRoles": {
 		"enabled": false,
 		"levels": [

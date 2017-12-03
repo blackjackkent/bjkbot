@@ -20,7 +20,8 @@ client.registry
 		['spoiler', 'Spoiler'],
 		['points', 'Points'],
 		['dnd', 'DND'],
-		['wiki', 'Wiki']
+		['wiki', 'Wiki'],
+		['music', 'Music']
 		//['customcommands', 'Custom Commands']
 	])
 	.registerDefaultGroups()
@@ -34,12 +35,14 @@ client.dispatcher.addInhibitor(msg => {
 client.on('ready', () => {
 	console.log('Bot initialized.');
 	client.user.setGame(config.botDisplayGame);
-
-	/* ------- MESSAGE PROCESSOR ---- */
-	var messageProcessor = new MessageProcessor(client);
-	client.on('message', (message) => {
-		messageProcessor.process(message);
-	});
+});
+/* ------- MESSAGE PROCESSOR ---- */
+var messageProcessor = new MessageProcessor(client);
+client.dispatcher.addInhibitor(msg => {
+	return messageProcessor.inhibit(msg);
+});
+client.on('message', (message) => {
+	messageProcessor.process(message);
 });
 
 sqlite.open(path.join(__dirname, "settings.sqlite3")).then((db) => {
