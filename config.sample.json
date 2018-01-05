@@ -30,6 +30,7 @@
 		"scenarioMinInterval": 20
 	},
 	"wiki": {
+		"enabled": true,
 		"language": "en"
 	}
 }

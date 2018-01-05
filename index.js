@@ -21,6 +21,7 @@ client.registry
 		['points', 'Points'],
 		['dnd', 'DND'],
 		['wiki', 'Wiki'],
+		['inspiro', 'Inspiro'],
 		['music', 'Music']
 		//['customcommands', 'Custom Commands']
 	])
