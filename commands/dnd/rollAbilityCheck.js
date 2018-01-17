@@ -1,9 +1,11 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
-const { STRENGTH, DEXTERITY, DEXTERITY_ABBREVIATION, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA } = require('../../modules/constants/dndConstants');
+const {
+	STRENGTH, DEXTERITY, DEXTERITY_ABBREVIATION, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA
+} = require('../../modules/constants/dndConstants');
 const { getCheckResultMessage, validateAbilityArgument, getCleanAbilityName } = require('../../modules/logic/dndUtility');
 const config = require('../../config.json');
 
@@ -14,15 +16,14 @@ module.exports = class RollAbilityCheckCommand extends Command {
 			group: 'dnd',
 			memberName: 'rollabilitycheck',
 			guildOnly: true,
-			description: `Rolls a d20 for the requested ability based on your saved character's modifier`,
+			description: 'Rolls a d20 for the requested ability based on your saved character\'s modifier',
 			examples: [`rollabilitycheck ${STRENGTH}`, `rollabilitycheck ${DEXTERITY_ABBREVIATION}`],
 			args: [{
 				key: 'abilityIdentifier',
 				prompt: `What ability do you want to roll a check for? Enter \`${STRENGTH}\`, \`${DEXTERITY}\`, \`${INTELLIGENCE}\`, \`${WISDOM}\`, \`${CONSTITUTION}\`, or \`${CHARISMA}\`.`,
 				type: 'string',
-				validate: function (value, message, arg) {
-					let isValid = validateAbilityArgument(value);
-					if (!isValid) {
+				validate(value) {
+					if (!validateAbilityArgument(value)) {
 						return `Invalid ability. Type \`${STRENGTH}\`, \`${CONSTITUTION}\`, \`${INTELLIGENCE}\`, \`${WISDOM}\`, \`${DEXTERITY}\`, or \`${CHARISMA}\`.`
 					}
 					return true;
@@ -46,15 +47,15 @@ module.exports = class RollAbilityCheckCommand extends Command {
 
 	executeRoll(message, args) {
 		const { abilityIdentifier } = args;
-		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
+		const character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		if (!character) {
 			message.reply(`You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`);
 			return null;
 		}
-		let identifier = getCleanAbilityName(abilityIdentifier);
-		let modifier = character.getAbilityModifierByName(identifier);
-		let result = this.diceRoller.getD20RollResult(modifier);
-		let reply = getCheckResultMessage(result, identifier, modifier);
+		const identifier = getCleanAbilityName(abilityIdentifier);
+		const modifier = character.getAbilityModifierByName(identifier);
+		const result = this.diceRoller.getD20RollResult(modifier);
+		const reply = getCheckResultMessage(result, identifier, modifier);
 		return {
 			reply,
 			result
@@ -62,11 +63,11 @@ module.exports = class RollAbilityCheckCommand extends Command {
 	}
 
 	runAsModule(message, args) {
-		let executionResult = this.executeRoll(message, args);
+		const executionResult = this.executeRoll(message, args);
 		if (!executionResult) {
 			return null;
 		}
 		message.reply(executionResult.reply);
 		return executionResult.result;
 	}
-}
+};

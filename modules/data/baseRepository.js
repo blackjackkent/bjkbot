@@ -4,7 +4,7 @@ module.exports = class BaseRepository {
 	}
 
 	get(guild, key) {
-		let result = this.client.provider.get(guild, key);
+		const result = this.client.provider.get(guild, key);
 		if (!result) {
 			return null;
 		}
@@ -12,7 +12,7 @@ module.exports = class BaseRepository {
 	}
 
 	set(guild, key, value) {
-		let stringifiedValue = JSON.stringify(value);
+		const stringifiedValue = JSON.stringify(value);
 		this.client.provider.set(guild, key, stringifiedValue);
 	}
-}
+};

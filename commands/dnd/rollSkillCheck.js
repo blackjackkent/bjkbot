@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
@@ -13,15 +13,14 @@ module.exports = class RollSkillCheckCommand extends Command {
 			group: 'dnd',
 			memberName: 'rollskillcheck',
 			guildOnly: true,
-			description: `Rolls a d20 for the requested skill based on your saved character's modifier and proficiencies`,
+			description: 'Rolls a d20 for the requested skill based on your saved character\'s modifier and proficiencies',
 			examples: ['rollskillcheck sleightofhand', 'rollabilitycheck perception'],
 			args: [{
 				key: 'skillIdentifier',
-				prompt: `What skill do you want to roll a check for? Enter 'acrobatics', 'animalhandling', 'arcana', 'athletics', 'deception', 'history', 'insight', 'intimidation', 'investigation', 'medicine', 'nature', 'perception', 'performance', 'persuasion', 'religion', 'sleightofhand', 'stealth', or 'survival'.`,
+				prompt: 'What skill do you want to roll a check for? Enter \'acrobatics\', \'animalhandling\', \'arcana\', \'athletics\', \'deception\', \'history\', \'insight\', \'intimidation\', \'investigation\', \'medicine\', \'nature\', \'perception\', \'performance\', \'persuasion\', \'religion\', \'sleightofhand\', \'stealth\', or \'survival\'.',
 				type: 'string',
-				validate: function (value, message, arg) {
-					let isValid = validateSkillArgument(value);
-					if (!isValid) {
+				validate(value) {
+					if (!validateSkillArgument(value)) {
 						return "Invalid skill. Type 'acrobatics', 'animalhandling', 'arcana', 'athletics', 'deception', 'history', 'insight', 'intimidation', 'investigation', 'medicine', 'nature', 'perception', 'performance', 'persuasion', 'religion', 'sleightofhand', 'stealth', or 'survival'."
 					}
 					return true;
@@ -42,17 +41,19 @@ module.exports = class RollSkillCheckCommand extends Command {
 
 	executeRoll(message, args) {
 		const { skillIdentifier } = args;
-		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
+		const character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		if (!character) {
-			message.reply(`You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`);
-			return;
+			return {
+				reply: `You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`
+			};
 		}
-		let abilityIdentifier = getAbilityForSkill(skillIdentifier);
-		let modifier = character.getAbilityModifierByName(abilityIdentifier);
-		let isProficient = character.proficientSkills.find(s => s.key === skillIdentifier) != undefined;
-		let proficiencyBonus = isProficient ? 2 : null;
-		let result = this.diceRoller.getD20RollResult(modifier, proficiencyBonus);
-		let reply = getCheckResultMessage(result, abilityIdentifier, modifier, proficiencyBonus);
+		const abilityIdentifier = getAbilityForSkill(skillIdentifier);
+		const modifier = character.getAbilityModifierByName(abilityIdentifier);
+		const isProficient = character.proficientSkills
+			.find(s => s.key === skillIdentifier) !== undefined;
+		const proficiencyBonus = isProficient ? 2 : null;
+		const result = this.diceRoller.getD20RollResult(modifier, proficiencyBonus);
+		const reply = getCheckResultMessage(result, abilityIdentifier, modifier, proficiencyBonus);
 		return {
 			reply,
 			result
@@ -60,8 +61,8 @@ module.exports = class RollSkillCheckCommand extends Command {
 	}
 
 	runAsModule(message, args) {
-		let executionResult = this.executeRoll(message, args);
+		const executionResult = this.executeRoll(message, args);
 		message.reply(executionResult.reply);
 		return executionResult.result;
 	}
-}
+};

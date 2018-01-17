@@ -1,11 +1,12 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
 const DnDRepository = require('../../modules/data/dndRepository');
 const DndCharacter = require('../../modules/models/dndCharacter');
-const config = require('../../config.json');
-const { STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA } = require('../../modules/constants/dndConstants');
+const {
+	STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA
+} = require('../../modules/constants/dndConstants');
 const { getRandomItemsFromArray } = require('../../modules/logic/utility');
 const { getAvailableSkills } = require('../../modules/logic/dndUtility');
 
@@ -27,7 +28,7 @@ module.exports = class InitCharacterCommand extends Command {
 	}
 
 	initCharacter(message) {
-		let characterData = {
+		const characterData = {
 			[STRENGTH]: this.generateScore(),
 			[DEXTERITY]: this.generateScore(),
 			[INTELLIGENCE]: this.generateScore(),
@@ -35,26 +36,26 @@ module.exports = class InitCharacterCommand extends Command {
 			[WISDOM]: this.generateScore(),
 			[CHARISMA]: this.generateScore(),
 			proficientSkills: this.getRandomProficiencies()
-		}
-		let character = new DndCharacter(characterData);
+		};
+		const character = new DndCharacter(characterData);
 		this.storeCharacterData(message, character);
 		message.reply(character.toString());
 	}
 
 	generateScore() {
-		let values = [];
+		const values = [];
 		for (let i = 0; i < 4; i++) {
 			values.push(this.diceRoller.roll('d6'));
 		}
 		values.sort((a, b) => a - b);
 		values.shift();
-		let sum = values.reduce((a, b) => a + b, 0);
+		const sum = values.reduce((a, b) => a + b, 0);
 		return sum;
 	}
 
 	getRandomProficiencies() {
-		let availableSkills = getAvailableSkills();
-		let proficientSkills = getRandomItemsFromArray(availableSkills, 3);
+		const availableSkills = getAvailableSkills();
+		const proficientSkills = getRandomItemsFromArray(availableSkills, 3);
 		return proficientSkills;
 	}
 
@@ -63,8 +64,8 @@ module.exports = class InitCharacterCommand extends Command {
 		if (characterData == null) {
 			characterData = {};
 		}
-		let senderKey = message.author.toString();
+		const senderKey = message.author.toString();
 		characterData[senderKey] = character;
 		this.dndRepository.setCharacters(message.guild, characterData);
 	}
-}
+};

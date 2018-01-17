@@ -1,7 +1,6 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
-const config = require('../../config.json');
 
 module.exports = class ClearSpoilerCommand extends Command {
 	constructor(client) {
@@ -14,9 +13,9 @@ module.exports = class ClearSpoilerCommand extends Command {
 			examples: ['clearspoiler']
 		});
 	}
-	run(message, args) {
+	run(message) {
 		this.client.provider.set(message.guild, 'spoiler-topic', null);
 		this.client.provider.set(message.guild, 'spoiler-author', null);
-		message.say(`The spoiler channel topic has been removed.`);
+		message.say('The spoiler channel topic has been removed.');
 	}
-}
+};

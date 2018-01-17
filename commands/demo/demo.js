@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 
 module.exports = class DemoResponseCommand extends Command {

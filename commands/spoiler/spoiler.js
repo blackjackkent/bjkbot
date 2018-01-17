@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const config = require('../../config.json');
 
@@ -31,8 +31,8 @@ module.exports = class SpoilerCommand extends Command {
 	}
 
 	printSpoilerTopic(message) {
-		let topic = this.client.provider.get(message.guild, 'spoiler-topic');
-		let sender = this.client.provider.get(message.guild, 'spoiler-author');
+		const topic = this.client.provider.get(message.guild, 'spoiler-topic');
+		const sender = this.client.provider.get(message.guild, 'spoiler-author');
 		if (!topic || !sender) {
 			message.say(`There is no topic currently set in the spoiler channel. Type \`${config.prefix}spoiler {topic}\` to set it.`);
 			return;
@@ -41,9 +41,8 @@ module.exports = class SpoilerCommand extends Command {
 	}
 
 	setSpoilerTopic(message, topic) {
-		let sender = message.author.toString();
-		let generalChannel = message.guild.channels.find('name', config.spoiler.generalChannel);
-		let spoilerChannel = message.guild.channels.find('name', config.spoiler.spoilerChannel);
+		const sender = message.author.toString();
+		const spoilerChannel = message.guild.channels.find('name', config.spoiler.spoilerChannel);
 		spoilerChannel.setTopic(`The current spoilerific topic is ${topic}!`);
 		this.client.provider.set(message.guild, 'spoiler-topic', topic);
 		this.client.provider.set(message.guild, 'spoiler-author', sender);
@@ -52,4 +51,4 @@ module.exports = class SpoilerCommand extends Command {
 			spoilerChannel.send(`Topic updated to ${topic} by ${sender}!`);
 		}
 	}
-}
+};

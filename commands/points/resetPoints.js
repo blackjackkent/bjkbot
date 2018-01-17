@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const Discord = require('discord.js');
 const config = require('../../config.json');
@@ -23,34 +23,34 @@ module.exports = class ResetPointsCommand extends Command {
 		});
 	}
 	run(message, args) {
-		let {
+		const {
 			user
 		} = args;
-		if (!message.member.hasPermission(Discord.Permissions.FLAGS["MANAGE_ROLES"])) {
-			message.reply("You do not have permission to manage roles in this server!");
+		if (!message.member.hasPermission(Discord.Permissions.FLAGS.MANAGE_ROLES)) {
+			message.reply('You do not have permission to manage roles in this server!');
 			return;
 		}
-		let userData = this.client.provider.get(message.guild, 'autorole-data');
-		let userKey = user.toString();
-		if (userData.hasOwnProperty(userKey)) {
+		const userData = this.client.provider.get(message.guild, 'autorole-data');
+		const userKey = user.toString();
+		if (Object.prototype.hasOwnProperty.call(userData, userKey)) {
 			userData[userKey] = 0;
 		}
 		this.client.provider.set(message.guild, 'autorole-data', userData);
-		message.reply(`Message count for user reset to 0!`);
-		let affectedUser = message.guild.members.find(val => val.user.id === user.id);
+		message.reply('Message count for user reset to 0!');
+		const affectedUser = message.guild.members.find(val => val.user.id === user.id);
 		this.removeAllManagedRoles(message, affectedUser);
 	}
 
 	removeAllManagedRoles(message, affectedUser) {
-		let currentRoles = affectedUser.roles;
-		let managedRoles = config.autoRoles.levels;
+		const currentRoles = affectedUser.roles;
+		const managedRoles = config.autoRoles.levels;
 		managedRoles.forEach((role) => {
 			if (currentRoles.find('name', role.roleName) == null) {
 				return;
 			}
-			let discordRole = message.guild.roles.find('name', role.roleName);
+			const discordRole = message.guild.roles.find('name', role.roleName);
 			affectedUser.removeRole(discordRole, 'Point count was reset.');
 			message.reply(`user was removed from ${role.roleName}!`);
 		});
 	}
-}
+};

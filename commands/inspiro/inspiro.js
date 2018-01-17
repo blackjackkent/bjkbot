@@ -1,7 +1,6 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
-const config = require('../../config.json');
 const request = require('request');
 
 module.exports = class WikiCommand extends Command {
@@ -15,29 +14,26 @@ module.exports = class WikiCommand extends Command {
 			examples: ['inspiro']
 		});
 	}
-	run(message, args) {
-		const {
-            keyphrase
-        } = args;
+	run(message) {
 		return this.queryInspirobot(message);
 	}
 
 	queryInspirobot(message) {
-		let self = this;
-		request('http://inspirobot.me/api?generate=true', function (err, response) {
+		const self = this;
+		request('http://inspirobot.me/api?generate=true', (err, response) => {
 			if (err) {
 				self.sendNotFoundMessage(message);
 				return;
 			}
 			self.sendFoundMessage(message, response.body);
-		})
+		});
 	}
 
 	sendNotFoundMessage(message) {
-		message.say(`Error contacting Inspirobot. :(`);
+		message.say('Error contacting Inspirobot. :(');
 	}
 
 	sendFoundMessage(message, data) {
 		message.say(data);
 	}
-}
+};

@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const DnDRepository = require('../../modules/data/dndRepository');
 const config = require('../../config.json');
@@ -21,11 +21,11 @@ module.exports = class MyCharacterCommand extends Command {
 	}
 
 	displayCharacter(message) {
-		let character = this.dndRepository.getCharacter(message.guild, message.author.toString());
+		const character = this.dndRepository.getCharacter(message.guild, message.author.toString());
 		if (!character) {
 			message.reply(`You do not have a character saved yet! Type \`${config.prefix}initcharacter\` to create a character to play with.`);
 			return;
 		}
 		message.reply(character.toString());
 	}
-}
+};

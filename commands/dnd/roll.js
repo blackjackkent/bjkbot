@@ -1,8 +1,7 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const DiceRoller = require('../../modules/logic/diceRoller');
-const config = require('../../config.json');
 
 module.exports = class RollCommand extends Command {
 	constructor(client) {
@@ -26,13 +25,12 @@ module.exports = class RollCommand extends Command {
 		if (phrase === '') {
 			phrase = 'd20';
 		}
-		let diceRoller = new DiceRoller();
+		const diceRoller = new DiceRoller();
 		try {
-			let result = diceRoller.roll(phrase);
+			const result = diceRoller.roll(phrase);
 			message.reply(`you rolled ${result}!`);
 		} catch (errorMessage) {
 			message.reply(errorMessage);
-			return;
 		}
 	}
-}
+};

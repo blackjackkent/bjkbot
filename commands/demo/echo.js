@@ -1,7 +1,6 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
-const config = require('../../config.json');
 
 module.exports = class EchoCommand extends Command {
 	constructor(client) {
@@ -22,8 +21,8 @@ module.exports = class EchoCommand extends Command {
 	run(message, args) {
 		const {
 			phrase
-        } = args;
+		} = args;
 		console.log(message);
 		message.say(`${message.author.toString()} ${phrase}!`);
 	}
-}
+};

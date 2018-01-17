@@ -4,9 +4,6 @@ const DndScenario = require('../models/dndScenario');
 const { getRandomValue } = require('../logic/utility');
 
 module.exports = class DnDRepository extends BaseRepository {
-	constructor(client) {
-		super(client);
-	}
 	getCharacters(guild) {
 		return this.get(guild, 'dndcharacter-data');
 	}
@@ -16,26 +13,26 @@ module.exports = class DnDRepository extends BaseRepository {
 	}
 
 	getCharacter(guild, userId) {
-		let data = this.getCharacters(guild);
+		const data = this.getCharacters(guild);
 		if (data == null) {
 			return null;
 		}
-		let rawCharacter = data[userId];
+		const rawCharacter = data[userId];
 		if (!rawCharacter) {
 			return null;
 		}
-		let character = new DnDCharacter(rawCharacter);
+		const character = new DnDCharacter(rawCharacter);
 		return character;
 	}
 
 	getRandomScenario(guild) {
-		let data = this.getAllScenarios(guild);
+		const data = this.getAllScenarios(guild);
 		if (!data) {
 			return null;
 		}
-		var max = data.length - 1;
-		var random = getRandomValue(max, 0);
-		let rawScenario = data[random];
+		const max = data.length - 1;
+		const random = getRandomValue(max, 0);
+		const rawScenario = data[random];
 		return new DndScenario(rawScenario);
 	}
 
@@ -46,4 +43,4 @@ module.exports = class DnDRepository extends BaseRepository {
 	setAllScenarios(guild, value) {
 		this.set(guild, 'dndscenario-data', value);
 	}
-}
+};

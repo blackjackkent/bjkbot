@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const config = require('../../config.json');
 const https = require('https');
@@ -22,24 +22,24 @@ module.exports = class WikiCommand extends Command {
 	}
 	run(message, args) {
 		const {
-            keyphrase
-        } = args;
+			keyphrase
+		} = args;
 		return this.queryWikipedia(message, encodeURIComponent(keyphrase));
 	}
 
 	queryWikipedia(message, keyphrase) {
-		var options = {
+		const options = {
 			host: `${config.wiki.language}.wikipedia.org`,
 			path: `/w/api.php?action=query&list=search&srsearch=${keyphrase}&format=json&srlimit=1`
 		};
-		var self = this;
-		var callback = function (response) {
-			var body = '';
-			response.on('data', function (chunk) {
+		const self = this;
+		const callback = (response) => {
+			let body = '';
+			response.on('data', (chunk) => {
 				body += chunk;
 			});
-			response.on('end', function () {
-				var data = JSON.parse(body);
+			response.on('end', () => {
+				const data = JSON.parse(body);
 				if (!data || !data.query || !data.query.search) {
 					self.sendNotFoundMessage(message, keyphrase);
 					return;
@@ -47,7 +47,7 @@ module.exports = class WikiCommand extends Command {
 				self.sendFoundMessage(message, data.query.search[0].title);
 				console.log(JSON.parse(body));
 			});
-		}
+		};
 
 		https.request(options, callback).end();
 	}
@@ -57,12 +57,12 @@ module.exports = class WikiCommand extends Command {
 	}
 
 	sendFoundMessage(message, articleTitle) {
-		articleTitle = this.encodeArticleTitle(articleTitle);
-		message.say(`https://${config.wiki.language}.wikipedia.org/wiki/${articleTitle}`);
+		const encodedTitle = this.encodeArticleTitle(articleTitle);
+		message.say(`https://${config.wiki.language}.wikipedia.org/wiki/${encodedTitle}`);
 	}
 
 	encodeArticleTitle(articleTitle) {
-		articleTitle = articleTitle.replace(/ /g, "_");
-		return articleTitle;
+		const encodedTitle = articleTitle.replace(/ /g, '_');
+		return encodedTitle;
 	}
-}
+};
