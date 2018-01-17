@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const MusicRepository = require('../../modules/data/musicRepository');
 

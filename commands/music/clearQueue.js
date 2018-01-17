@@ -1,5 +1,5 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
 const MusicRepository = require('../../modules/data/musicRepository');
 
@@ -16,8 +16,8 @@ module.exports = class ClearQueueCommand extends Command {
 		this.musicRepository = new MusicRepository(client);
 	}
 
-	run(message, args) {
+	run(message) {
 		this.musicRepository.clearQueue(message.guild);
-		message.say(`Queue cleared!`);
+		message.say('Queue cleared!');
 	}
 };

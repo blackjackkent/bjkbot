@@ -1,5 +1,5 @@
 const {
-    CommandoClient,
+	CommandoClient,
 	SQLiteProvider
 } = require('discord.js-commando');
 const sqlite = require('sqlite');
@@ -7,6 +7,7 @@ const path = require('path');
 const config = require('./config');
 const MessageProcessor = require('./modules/processors/messageProcessor');
 const DndScenarioInitializer = require('./modules/processors/dndScenarioInitializer');
+
 process.on('unhandledRejection', r => console.log(r));
 const client = new CommandoClient({
 	commandPrefix: config.prefix,
@@ -23,35 +24,28 @@ client.registry
 		['wiki', 'Wiki'],
 		['inspiro', 'Inspiro'],
 		['music', 'Music']
-		//['customcommands', 'Custom Commands']
+		// ['customcommands', 'Custom Commands']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
 	.registerCommandsIn(path.join(__dirname, 'commands'));
-client.dispatcher.addInhibitor(msg => {
-	if (msg.content == config.prefix + 'join') {
-		return 'Command handled by scenario runner';
-	}
-});
 client.on('ready', () => {
 	console.log('Bot initialized.');
 	client.user.setGame(config.botDisplayGame);
 });
 /* ------- MESSAGE PROCESSOR ---- */
-var messageProcessor = new MessageProcessor(client);
-client.dispatcher.addInhibitor(msg => {
-	return messageProcessor.inhibit(msg);
-});
+const messageProcessor = new MessageProcessor(client);
+client.dispatcher.addInhibitor(msg => messageProcessor.inhibit(msg));
 client.on('message', (message) => {
 	messageProcessor.process(message);
 });
 
-sqlite.open(path.join(__dirname, "settings.sqlite3")).then((db) => {
+sqlite.open(path.join(__dirname, 'settings.sqlite3')).then((db) => {
 	client.setProvider(new SQLiteProvider(db)).then(() => {
 		if (config.dnd.scenarioRunningEnabled) {
-			var scenarioInit = new DndScenarioInitializer(client);
+			const scenarioInit = new DndScenarioInitializer(client);
 			scenarioInit.init();
-		};
+		}
 	});
 });
 client.login(config.token);

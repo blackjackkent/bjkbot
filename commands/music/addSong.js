@@ -1,7 +1,8 @@
 const {
-    Command
+	Command
 } = require('discord.js-commando');
-var google = require('googleapis');
+const google = require('googleapis');
+
 const youtube = google.youtube('v3');
 const config = require('../../config.json');
 const MusicRepository = require('../../modules/data/musicRepository');
@@ -30,14 +31,14 @@ module.exports = class AddSongCommand extends Command {
 			searchPhrase
 		} = args;
 		const parameters = {
-			'auth': config.music.youTubeApiKey,
-			'maxResults': '1',
-			'part': 'snippet',
-			'q': searchPhrase,
-			'type': 'video'
-		}
+			auth: config.music.youTubeApiKey,
+			maxResults: '1',
+			part: 'snippet',
+			q: searchPhrase,
+			type: 'video'
+		};
 		const command = this;
-		youtube.search.list(parameters, function (err, response) {
+		youtube.search.list(parameters, (err, response) => {
 			if (err) {
 				message.say('There was an error searching for your query. Please try again later.');
 				return;
@@ -60,7 +61,7 @@ module.exports = class AddSongCommand extends Command {
 		const queueItem = {
 			id: uuidv4(),
 			requesterId: message.author.toString(),
-			songUrl: "https://www.youtube.com/watch?v=" + result.id.videoId,
+			songUrl: `https://www.youtube.com/watch?v=${result.id.videoId}`,
 			songTitle: result.snippet.title
 		};
 		this.musicRepository.addSongToQueue(message.guild, queueItem);
